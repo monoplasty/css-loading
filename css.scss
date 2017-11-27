@@ -1,4 +1,7 @@
-$length:100px;
+$big-length:100px;
+$middle-length:80px;
+$little-length:60px;
+$small-length:40px;
 $color: #FD5442;
 $deviation: 20px;
 @mixin common-style($distance, $offset) {
@@ -36,37 +39,54 @@ $deviation: 20px;
     }
 }
 
-.custom-loading-animation {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: $length;
-    height: $length;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    box-sizing: border-box;
-    &-outside {
-        @include common-style($length, 0);
-        &-left {
-            animation: load1 1.5s infinite linear;
-            -webkit-animation: load1 1.5s infinite linear;
+@mixin all-loading-animation($size) {
+    .custom-loading-animation {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: $size;
+        height: $size;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        box-sizing: border-box;
+        &-outside {
+            @include common-style($size, 0);
+            &-left {
+                animation: load1 1.5s infinite linear;
+                -webkit-animation: load1 1.5s infinite linear;
+            }
+            &-right {
+                animation: load2 1.5s infinite linear;
+                -webkit-animation: load2 1.5s infinite linear;
+            }
         }
-        &-right {
-            animation: load2 1.5s infinite linear;
-            -webkit-animation: load2 1.5s infinite linear;
+        &-inside {
+            @include common-style(($size/1px-$deviation/1px)*1px, $deviation/2);
+            &-left {
+                animation: load3 1.5s infinite linear;
+                -webkit-animation: load3 1.5s infinite linear;
+            }
+            &-right {
+                animation: load4 1.5s infinite linear;
+                -webkit-animation: load4 1.5s infinite linear;
+            }
         }
     }
-    &-inside {
-        @include common-style(($length/1px-$deviation/1px)*1px, $deviation/2);
-        &-left {
-            animation: load3 1.5s infinite linear;
-            -webkit-animation: load3 1.5s infinite linear;
-        }
-        &-right {
-            animation: load4 1.5s infinite linear;
-            -webkit-animation: load4 1.5s infinite linear;
-        }
-    }
+}
+
+.big-size {
+    @include all-loading-animation($big-length)
+}
+
+.middle-size {
+    @include all-loading-animation($middle-length)
+}
+
+.little-size {
+    @include all-loading-animation($little-length)
+}
+.small-size {
+    @include all-loading-animation($small-length)
 }
 
 @-webkit-keyframes load1 {
